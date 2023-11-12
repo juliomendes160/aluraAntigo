@@ -1,0 +1,40 @@
+name: Build and Deploy to gh-pages
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
+defaults:
+  run:
+    working-directory: Angular 14 aplique os conceitos e desenvolva seu primeiro CRUD/memoteca
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install Dependencies
+        run: |
+          npm install
+
+      - name: Build Production Files
+        run: |
+          ng build --base-href=.
+
+      - name: Deploy to Docs Branch
+        run: |
+          ls
+          echo $GITHUB_REF
